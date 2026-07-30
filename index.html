@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>東京サキュバス キャラ診断フローチャート</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'M PLUS Rounded 1c', sans-serif;
+      background-color: #0f0c1b;
+      color: #f3e8ff;
+    }
+    .neon-border {
+      box-shadow: 0 0 15px rgba(217, 70, 239, 0.4), inset 0 0 15px rgba(217, 70, 239, 0.2);
+    }
+    .arrow-down::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 10px solid #a855f7;
+      margin: 8px auto 0;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    .highlight-active {
+      animation: neonPulse 1.2s ease-in-out 2;
+    }
+    @keyframes neonPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(217, 70, 239, 0.4); }
+      50% { transform: scale(1.03); box-shadow: 0 0 30px rgba(217, 70, 239, 0.9), 0 0 10px rgba(255, 255, 255, 0.8); }
+    }
+  </style>
+</head>
+<body class="p-4 md:p-8 min-h-screen flex flex-col items-center justify-center">
+
+  <!-- フローチャート全体コンテナ（スクショ推奨領域） -->
+  <div id="chart-card" class="w-full max-w-4xl bg-slate-900/90 border-2 border-fuchsia-500/60 rounded-3xl p-6 md:p-10 shadow-2xl backdrop-blur relative overflow-hidden">
+    
+    <!-- 装飾背景 -->
+    <div class="absolute -top-20 -left-20 w-60 h-60 bg-fuchsia-600/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-20 -right-20 w-60 h-60 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- ヘッダー -->
+    <div class="text-center mb-8 border-b border-fuchsia-500/30 pb-6">
+      <div class="inline-block bg-fuchsia-950/80 text-fuchsia-300 text-xs md:text-sm font-bold px-4 py-1 rounded-full border border-fuchsia-500/40 mb-2">
+        青年向け現代ファンタジー
+      </div>
+      <h1 class="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 via-pink-300 to-purple-400 tracking-wider">
+        『東京サキュバス』
+      </h1>
+      <p class="text-base md:text-xl font-bold text-pink-200 mt-2">
+        🔮 あなたにぴったりの「推しキャラ！」診断 🔮
+      </p>
+    </div>
+
+    <!-- スタート地点 -->
+    <div class="flex flex-col items-center mb-6">
+      <div class="bg-gradient-to-r from-fuchsia-600 to-purple-600 text-white font-black px-6 py-2 rounded-full text-lg shadow-lg border border-pink-300 animate-pulse">
+        START !
+      </div>
+      <div class="w-0.5 h-6 bg-fuchsia-500"></div>
+    </div>
+
+    <!-- Q1 -->
+    <div id="q1" class="bg-slate-800/90 border border-fuchsia-400/50 rounded-2xl p-4 md:p-6 mb-6 text-center shadow-lg relative">
+      <span class="absolute -top-3 left-6 bg-fuchsia-600 text-white text-xs font-bold px-3 py-0.5 rounded-full">質問 1</span>
+      <p class="text-base md:text-lg font-bold text-white mt-1">
+        『東京サキュバス』の世界に入ったら、どんな関係性が良い？
+      </p>
+      
+      <!-- 分岐矢印 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-2">
+        <div class="flex flex-col items-center">
+          <button onclick="jumpTo('q2')" class="w-full text-left bg-pink-950/80 text-pink-300 border border-pink-500/50 rounded-xl p-2 md:p-3 text-xs md:text-sm font-bold hover:border-pink-300 hover:bg-pink-900/90 transition-all transform hover:-translate-y-0.5 cursor-pointer">
+            【A】甘く危険なサキュバスからの「誘惑・搾取」！
+          </button>
+          <div class="text-xs text-pink-400 font-bold mt-2 arrow-down">質問2へ</div>
+        </div>
+        <div class="flex flex-col items-center">
+          <button onclick="jumpTo('result-d')" class="w-full text-left bg-emerald-950/80 text-emerald-300 border border-emerald-500/50 rounded-xl p-2 md:p-3 text-xs md:text-sm font-bold hover:border-emerald-300 hover:bg-emerald-900/90 transition-all transform hover:-translate-y-0.5 cursor-pointer">
+            【B】幼馴染・後輩との甘酸っぱい「一途な恋心」！
+          </button>
+          <div class="text-xs text-emerald-400 font-bold mt-2 arrow-down">診断結果へ</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div id="q2" class="bg-slate-800/90 border border-fuchsia-400/50 rounded-2xl p-4 md:p-6 mb-8 text-center shadow-lg relative transition-all duration-300">
+      <span class="absolute -top-3 left-6 bg-fuchsia-600 text-white text-xs font-bold px-3 py-0.5 rounded-full">質問 2 （【A】を選んだ方）</span>
+      <p class="text-base md:text-lg font-bold text-white mt-1">
+        誘惑されるなら、どのタイプに惹かれる？
+      </p>
+      
+      <!-- 分岐選択肢 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-4">
+        <button onclick="jumpTo('result-a')" class="bg-purple-950/80 text-purple-200 border border-purple-500/40 rounded-xl p-2.5 text-xs md:text-sm font-bold flex flex-col justify-between hover:border-purple-300 hover:bg-purple-900/90 transition-all transform hover:-translate-y-0.5 cursor-pointer text-left">
+          <span>① 清楚で天然、一生懸命に奉仕してくれるお姉さん！</span>
+          <span class="text-purple-400 mt-2 font-bold text-xs arrow-down">結果Aへ</span>
+        </button>
+        <button onclick="jumpTo('result-b')" class="bg-amber-950/80 text-amber-200 border border-amber-500/40 rounded-xl p-2.5 text-xs md:text-sm font-bold flex flex-col justify-between hover:border-amber-300 hover:bg-amber-900/90 transition-all transform hover:-translate-y-0.5 cursor-pointer text-left">
+          <span>② ツンデレで負けず嫌い！対抗心で大胆になる小悪魔！</span>
+          <span class="text-amber-400 mt-2 font-bold text-xs arrow-down">結果Bへ</span>
+        </button>
+        <button onclick="jumpTo('result-c')" class="bg-sky-950/80 text-sky-200 border border-sky-500/40 rounded-xl p-2.5 text-xs md:text-sm font-bold flex flex-col justify-between hover:border-sky-300 hover:bg-sky-900/90 transition-all transform hover:-translate-y-0.5 cursor-pointer text-left">
+          <span>③ 誘惑に必死で抗う男の美学・主人公視点！</span>
+          <span class="text-sky-400 mt-2 font-bold text-xs arrow-down">結果Cへ</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 診断結果一覧 -->
+    <div id="results" class="text-center font-bold text-fuchsia-300 text-sm mb-4">✨ 診断結果（クリックで公式詳細へ） ✨</div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <!-- 結果A: ユウナ (公式サイトの指定ID位置へ自動スクロール) -->
+      <a href="https://sites.google.com/view/tokyo-succubus/home#h.3r9uhy5cyf0o" target="_blank" id="result-a" class="block bg-purple-900/30 border border-purple-500/50 hover:border-purple-300 rounded-2xl p-4 relative neon-border transition-all duration-300 transform hover:-translate-y-1 group">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-purple-600 text-white font-black flex items-center justify-center text-lg border border-purple-300 shadow">
+              A
+            </div>
+            <div>
+              <span class="text-xs text-purple-300 font-bold block">サキュバス姉</span>
+              <h3 class="text-lg font-black text-purple-200 group-hover:text-fuchsia-300 transition-colors">天神 ユウナ (Yuuna)</h3>
+            </div>
+          </div>
+          <span class="text-xs bg-purple-950/80 text-purple-300 border border-purple-500/40 px-2 py-1 rounded-md font-bold group-hover:bg-purple-600 group-hover:text-white transition-all">公式詳細を見る ↗</span>
+        </div>
+        <p class="text-xs text-purple-100/90 leading-relaxed font-bold">
+          【清楚天然×奉仕系お姉さん】<br>
+          ウブなのにサキュバスの知識は完璧!? 甘い誘惑と包容力に溺れたいあなたに！
+        </p>
+      </a>
+
+      <!-- 結果B: ステラ (公式サイトの指定ID位置へ自動スクロール) -->
+      <a href="https://sites.google.com/view/tokyo-succubus/home#h.mreimhw4aj9j" target="_blank" id="result-b" class="block bg-amber-900/30 border border-amber-500/50 hover:border-amber-300 rounded-2xl p-4 relative neon-border transition-all duration-300 transform hover:-translate-y-1 group">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-amber-500 text-white font-black flex items-center justify-center text-lg border border-amber-200 shadow">
+              B
+            </div>
+            <div>
+              <span class="text-xs text-amber-300 font-bold block">サキュバス妹</span>
+              <h3 class="text-lg font-black text-amber-200 group-hover:text-amber-300 transition-colors">天神 ステラ (Sutera)</h3>
+            </div>
+          </div>
+          <span class="text-xs bg-amber-950/80 text-amber-300 border border-amber-500/40 px-2 py-1 rounded-md font-bold group-hover:bg-amber-500 group-hover:text-white transition-all">公式詳細を見る ↗</span>
+        </div>
+        <p class="text-xs text-amber-100/90 leading-relaxed font-bold">
+          【ツンデレ×金髪ツインテ小悪魔】<br>
+          エロい事は嫌いなのに、姉に対抗して思わず大胆になっちゃうギャップに翻弄されたいあなたに！
+        </p>
+      </a>
+
+      <!-- 結果C: タクト (公式サイトの指定ID位置へ自動スクロール) -->
+      <a href="https://sites.google.com/view/tokyo-succubus/home#h.w5h67a8hxl1m" target="_blank" id="result-c" class="block bg-sky-900/30 border border-sky-500/50 hover:border-sky-300 rounded-2xl p-4 relative neon-border transition-all duration-300 transform hover:-translate-y-1 group">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-sky-600 text-white font-black flex items-center justify-center text-lg border border-sky-200 shadow">
+              C
+            </div>
+            <div>
+              <span class="text-xs text-sky-300 font-bold block">主人公（理系男子）</span>
+              <h3 class="text-lg font-black text-sky-200 group-hover:text-sky-300 transition-colors">皇 タクト (Takuto)</h3>
+            </div>
+          </div>
+          <span class="text-xs bg-sky-950/80 text-sky-300 border border-sky-500/40 px-2 py-1 rounded-md font-bold group-hover:bg-sky-600 group-hover:text-white transition-all">公式詳細を見る ↗</span>
+        </div>
+        <p class="text-xs text-sky-100/90 leading-relaxed font-bold">
+          【ヒーローを志す不憫な主人公】<br>
+          正義の格言で誘惑に耐えようとするも、絞り取られてしまう葛藤と展開を楽しみたいあなたに！
+        </p>
+      </a>
+
+      <!-- 結果D: マナ (公式サイトの指定ID位置へ自動スクロール) -->
+      <a href="https://sites.google.com/view/tokyo-succubus/home#h.w9pivgcuqb0g" target="_blank" id="result-d" class="block bg-emerald-900/30 border border-emerald-500/50 hover:border-emerald-300 rounded-2xl p-4 relative neon-border transition-all duration-300 transform hover:-translate-y-1 group">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-emerald-500 text-white font-black flex items-center justify-center text-lg border border-emerald-200 shadow">
+              D
+            </div>
+            <div>
+              <span class="text-xs text-emerald-300 font-bold block">陸上部・後輩</span>
+              <h3 class="text-lg font-black text-emerald-200 group-hover:text-emerald-300 transition-colors">綾瀬 マナ (Mana)</h3>
+            </div>
+          </div>
+          <span class="text-xs bg-emerald-950/80 text-emerald-300 border border-emerald-500/40 px-2 py-1 rounded-md font-bold group-hover:bg-emerald-500 group-hover:text-white transition-all">公式詳細を見る ↗</span>
+        </div>
+        <p class="text-xs text-emerald-100/90 leading-relaxed font-bold">
+          【活発×一途なヒロイン】<br>
+          サキュバスの誘惑が迫る中、昔からタクトを一途に想い続ける胸キュンポジション！
+        </p>
+      </a>
+
+    </div>
+
+    <!-- フッター誘導 -->
+    <div class="mt-8 text-center pt-4 border-t border-fuchsia-500/30 text-xs text-fuchsia-200">
+      <p class="font-bold">📖 全キャラクターの詳しいプロフィール＆試し読みは公式サイトで公開中！</p>
+      <p class="text-fuchsia-400 mt-1">© Transform 『東京サキュバス』</p>
+    </div>
+
+  </div>
+
+  <script>
+    function jumpTo(elementId) {
+      const target = document.getElementById(elementId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // ハイライトアニメーション付与
+        target.classList.remove('highlight-active');
+        void target.offsetWidth; // リフロー強制（アニメーションリセット）
+        target.classList.add('highlight-active');
+      }
+    }
+  </script>
+</body>
+</html>
